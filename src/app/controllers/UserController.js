@@ -1,21 +1,25 @@
-import User from '../schemas/User'
+import User from '../schemas/User';
 
 class UserController {
-  async create (req, res){
-  try {
-    const { name, username, email, password } = req.body;
+  async create(req, res) {
+    try {
+      const { name, username, email, password } = req.body;
 
-    const newUser = await User.create({
-      name,
-      username,
-      email,
-      password
-    });
+      const userCheck = await User.findOne({ username });
 
-    return res.status(201).json({ newUser });
+      if (userCheck)
+        return res.status(401).json({ error: 'User already exists' });
 
-  } catch (error) {
-      return res.status(400).json({ error: error.message })
+      const newUser = await User.create({
+        name,
+        username,
+        email,
+        password,
+      });
+
+      return res.status(201).json({ newUser });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
   }
 }
