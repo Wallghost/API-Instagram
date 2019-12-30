@@ -5,10 +5,9 @@ import authConfig from '../config/tokenConfig';
 
 const userSchema = new mongoose.Schema(
   {
-    // avatar: {
-    //   type: String,
-    //   required: true,
-    // },
+    avatar: {
+      type: String,
+    },
     name: {
       type: String,
       required: true,
@@ -59,7 +58,7 @@ userSchema.pre('save', async function hashPassword(next) {
 userSchema.methods = {
   generateToken() {
     return jwt.sign({ id: this.id }, authConfig.secret, {
-      expiresIn: '1h',
+      expiresIn: '1d',
     });
   },
 

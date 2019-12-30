@@ -11,6 +11,7 @@ class UserController {
         return res.status(401).json({ error: 'User already exists' });
 
       const newUser = await User.create({
+        avatar: '',
         name,
         username,
         email,
