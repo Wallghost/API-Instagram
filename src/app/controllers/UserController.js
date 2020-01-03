@@ -1,6 +1,31 @@
 import User from '../schemas/User';
+import Post from '../schemas/Posts';
 
 class UserController {
+  async userProfile(req, res) {
+    try {
+      const user = await User.findById(req.userID);
+
+      const { avatar, name, username, email } = user;
+
+      const postsCount = await Post.find({
+        user_id: req.userID,
+      }).countDocuments();
+
+      return res.json({
+        avatar,
+        name,
+        username,
+        email,
+        postsCount,
+        followers: user.followers.length,
+        following: user.following.length,
+      });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
+
   async create(req, res) {
     try {
       const { name, username, email, password } = req.body;

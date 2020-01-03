@@ -14,7 +14,9 @@ routes.get('/', AuthController.signin);
 
 routes.use(authMiddleware);
 
-routes.put('/users/update', UserController.update);
+routes.get('/user/profile', UserController.userProfile);
+
+routes.put('/user/update', UserController.update);
 
 routes.get('/feed', PostsController.feed);
 
