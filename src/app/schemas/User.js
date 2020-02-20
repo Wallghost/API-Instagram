@@ -25,12 +25,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    posts: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Posts',
-      },
-    ],
+    // posts: [
+    //   {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'Posts',
+    //   },
+    // ],
     followers: [
       {
         type: mongoose.Schema.ObjectId,
