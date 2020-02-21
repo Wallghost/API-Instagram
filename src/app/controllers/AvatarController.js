@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 class AvatarController {
   async store(req, res) {
-    const { originalname: name, filename: path } = req.file;
+    const { filename: path } = req.file;
 
     const user_id = req.userID;
 

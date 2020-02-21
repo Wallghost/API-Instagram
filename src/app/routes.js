@@ -26,4 +26,6 @@ routes.put('/user/update', UserController.update);
 
 routes.get('/feed', PostsController.feed);
 
+routes.post('/posts/create', upload.single('file'), PostsController.store);
+
 export default routes;
