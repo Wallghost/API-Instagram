@@ -9,7 +9,18 @@ class AvatarController {
 
     const profileAvatar = await User.findByIdAndUpdate(
       user_id,
-      { avatar: resolve(__dirname, '..', 'tmp', 'uploads', 'avatar', path) },
+      {
+        avatar: resolve(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          'tmp',
+          'uploads',
+          'avatar',
+          path
+        ),
+      },
       { new: true }
     );
 

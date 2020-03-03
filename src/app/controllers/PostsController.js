@@ -1,6 +1,6 @@
 import Post from '../schemas/Posts';
 import sharp from 'sharp';
-import { resolve } from 'path';
+import path from 'path';
 import fs from 'fs';
 
 class PostController {
@@ -17,21 +17,22 @@ class PostController {
     const [name] = image.split('.');
     const fileName = `${name}.jpg`;
 
-    // console.log(resolve(req.file.destination, 'posts', req.file.filename));
-
-    try {
-      await sharp(req.file.path)
-        .resize(500)
-        .jpeg({ quality: 70 })
-        .toFile(resolve(req.file.destination, 'posts', fileName));
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({ error: error });
-    }
+    await sharp(req.file.path)
+      .resize(500)
+      .jpeg({ quality: 70 })
+      .toFile(path.resolve(req.file.destination, '..', 'posts', fileName));
 
     fs.unlinkSync(req.file.path);
 
-    return res.json({ image, description });
+    const newPost = await Post.create({
+      user_id: req.userID,
+      fileName,
+      description,
+      likes: 0,
+      comentaries: [],
+    });
+
+    return res.json(newPost);
   }
 }
 
