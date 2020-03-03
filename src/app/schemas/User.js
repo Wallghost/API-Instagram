@@ -25,12 +25,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // posts: [
-    //   {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'Posts',
-    //   },
-    // ],
     followers: [
       {
         type: mongoose.Schema.ObjectId,
@@ -41,6 +35,12 @@ const userSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.ObjectId,
         ref: 'Users',
+      },
+    ],
+    posts: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Posts',
       },
     ],
   },

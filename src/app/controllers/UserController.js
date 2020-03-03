@@ -5,6 +5,7 @@ class UserController {
   async userProfile(req, res) {
     try {
       const user = await User.findById(req.userID);
+      const posts = await Post.find({ user_id: req.userID });
 
       const { avatar, name, username, email } = user;
 
@@ -20,6 +21,7 @@ class UserController {
         postsCount,
         followers: user.followers.length,
         following: user.following.length,
+        posts: posts,
       });
     } catch (error) {
       return res.status(400).json({ error: error.message });

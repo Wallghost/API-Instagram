@@ -14,7 +14,13 @@ class PostController {
     const { description } = req.body;
     const { filename: image } = req.file;
 
-    const [name] = image.split('.');
+    const [name, extType] = image.split('.');
+
+    if (extType !== 'jpg' && extType !== 'jpeg' && extType !== 'png') {
+      fs.unlinkSync(req.file.path);
+      return res.status(401).json({ error: 'Extension not supported' });
+    }
+
     const fileName = `${name}.jpg`;
 
     await sharp(req.file.path)
