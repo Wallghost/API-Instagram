@@ -1,14 +1,15 @@
 import Post from '../schemas/Posts';
+import User from '../schemas/User';
 import sharp from 'sharp';
 import path from 'path';
 import fs from 'fs';
 
 class PostController {
-  async feed(req, res) {
-    const posts = await Post.find().sort('-createdAt');
+  // async feed(req, res) {
+  //   const posts = await Post.find().sort('-createdAt');
 
-    return res.json(posts);
-  }
+  //   return res.json(posts);
+  // }
 
   async store(req, res) {
     const { description } = req.body;
@@ -38,7 +39,19 @@ class PostController {
       comentaries: [],
     });
 
+    await User.findByIdAndUpdate(req.userID, { $push: { posts: newPost } });
+
     return res.json(newPost);
+  }
+
+  async likeStore(req, res) {
+    const post = await Post.findById(req.params.id);
+
+    post.likes += 1;
+
+    await post.save();
+
+    res.json(post);
   }
 }
 

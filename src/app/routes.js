@@ -24,8 +24,10 @@ routes.get('/user/profile', UserController.userProfile);
 
 routes.put('/user/update', UserController.update);
 
-routes.get('/feed', PostsController.feed);
+// routes.get('/feed', PostsController.feed);
 
-routes.post('/posts/create', upload.single('file'), PostsController.store);
+routes.put('/posts/create', upload.single('file'), PostsController.store);
+
+routes.post('/posts/:id/like', PostsController.likeStore);
 
 export default routes;
