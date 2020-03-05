@@ -6,6 +6,7 @@ import UserController from './controllers/UserController';
 import AuthController from './controllers/AuthController';
 import PostsController from './controllers/PostsController';
 import AvatarController from './controllers/AvatarController';
+import FollowController from './controllers/FollowController';
 
 import authMiddleware from './middlewares/authMiddleware';
 
@@ -24,10 +25,12 @@ routes.get('/user/profile', UserController.userProfile);
 
 routes.put('/user/update', UserController.update);
 
-// routes.get('/feed', PostsController.feed);
+routes.get('/feed', PostsController.feed);
 
 routes.put('/posts/create', upload.single('file'), PostsController.store);
 
 routes.post('/posts/:id/like', PostsController.likeStore);
+
+routes.post('/follow/:id', FollowController.follow);
 
 export default routes;

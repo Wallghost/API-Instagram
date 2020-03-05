@@ -1,15 +1,15 @@
 import Post from '../schemas/Posts';
 import User from '../schemas/User';
 import sharp from 'sharp';
-import path from 'path';
+import { resolve } from 'path';
 import fs from 'fs';
 
 class PostController {
-  // async feed(req, res) {
-  //   const posts = await Post.find().sort('-createdAt');
+  async feed(req, res) {
+    const post = await Post.find().sort('-createdAt');
 
-  //   return res.json(posts);
-  // }
+    return res.json(post);
+  }
 
   async store(req, res) {
     const { description } = req.body;
@@ -27,7 +27,7 @@ class PostController {
     await sharp(req.file.path)
       .resize(500)
       .jpeg({ quality: 70 })
-      .toFile(path.resolve(req.file.destination, '..', 'posts', fileName));
+      .toFile(resolve(req.file.destination, '..', 'posts', fileName));
 
     fs.unlinkSync(req.file.path);
 
